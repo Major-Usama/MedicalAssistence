@@ -16,12 +16,32 @@ import {
 import ImageOverlay from "react-native-image-overlay";
 import { Zocial } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {signUp} from "../Database/authMethods"
 
 export default function SignUpScreen({ navigation }) {
-  const [text, onChangeText] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [pass2, setPass2] = React.useState("");
   const [phone, setPhone] = React.useState("");
+
+  const onPressSignUp=async()=>{
+    if(email && pass && pass2 && phone != ''){
+    if (pass === pass2){
+    await signUp(email, pass,phone).then(() => {
+        navigation.reset({
+          index:0,
+          routes:[{name:'ProfileScreen'}]
+        })
+    }).catch((error)=>{
+      console.log("error",error)
+    })
+    }else{
+    alert("Password doesn't match");
+    }
+    }else{
+      alert("Please fill all Fields");
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,8 +72,8 @@ export default function SignUpScreen({ navigation }) {
               <TextInput
                 placeholder="Email address"
                 style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
+                onChangeText={(text)=>setEmail(text)}
+                value={email}
               />
 
               <Entypo name="mail" size={28} color="lightgray" />
@@ -64,7 +84,7 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Password"
                 style={styles.input}
                 secureTextEntry={true}
-                onChangeText={setPass}
+                onChangeText={(text)=>setPass(text)}
                 value={pass}
               />
 
@@ -76,7 +96,7 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Repeat Password"
                 style={styles.input}
                 secureTextEntry={true}
-                onChangeText={setPass2}
+                onChangeText={(text)=>setPass2(text)}
                 value={pass2}
               />
 
@@ -88,7 +108,7 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Phone number"
                 style={styles.input}
                 keyboardType="number-pad"
-                onChangeText={setPhone}
+                onChangeText={(number)=>setPhone(number)}
                 value={phone}
               />
 
@@ -96,7 +116,7 @@ export default function SignUpScreen({ navigation }) {
             </View>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate("ProfileScreen")}
+              onPress={onPressSignUp}
             >
               <View style={styles.loginButton}>
                 <Text style={styles.loginText}>Sign Up</Text>

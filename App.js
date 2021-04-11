@@ -1,9 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Navigations from './src/navigations/Navigations';
-
+import FireBase from "./src/Database/Firebase"
 export default function App() {
+  useEffect(()=>{
+    FireBase
+  },[])
   return <Navigations />
 }
 

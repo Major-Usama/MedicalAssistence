@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import ImageOverlay from "react-native-image-overlay";
@@ -14,12 +15,28 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Checkbox from "expo-checkbox";
-import { Zocial } from "@expo/vector-icons";
+import { Zocial } from "@expo/vector-icons"; 
+import {logIn} from "../Database/authMethods"
 
 export default function LoginScreen({ navigation }) {
-  const [text, onChangeText] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [isChecked, setChecked] = React.useState(true);
+  
+  const onPressLogin=async()=>{
+    if(email && pass != ''){
+    await logIn(email, pass).then(() => {
+        navigation.reset({
+          index:0,
+          routes:[{name:'ProfileScreen'}]
+        })
+    }).catch((error)=>{
+      console.log("error",error)
+    })
+    }else{
+      alert("Please fill all Fields");
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,8 +67,8 @@ export default function LoginScreen({ navigation }) {
               <TextInput
                 placeholder="name@website.com"
                 style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
+                onChangeText={(text)=>setEmail(text)}
+                value={email}
               />
 
               <Entypo name="mail" size={28} color="lightgray" />
@@ -62,7 +79,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder="************"
                 style={styles.input}
                 secureTextEntry={true}
-                onChangeText={setPass}
+                onChangeText={(text)=>setPass(text)}
                 value={pass}
               />
 
@@ -87,9 +104,9 @@ export default function LoginScreen({ navigation }) {
               </Text>
             </View>
 
-            <View style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={onPressLogin}>
               <Text style={styles.loginText}>Log in</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </ImageOverlay>
       </ImageBackground>
