@@ -18,7 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -38,7 +38,7 @@ export default function ProfileScreen() {
           <Text style={styles.profile}>Profile</Text>
         </View>
 
-        <Entypo name="dots-three-vertical" size={20} color="white" />
+        <Entypo onPress={()=>navigation.navigate('PatientDonorScreen')} name="dots-three-vertical" size={20} color="white" />
       </View>
 
       <View>
@@ -268,9 +268,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  bottomContainer:
-  {
-      position:'absolute',
-      bottom:0,
-  }
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+  },
 });
