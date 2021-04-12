@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -18,7 +18,24 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import {getUserInfo} from "../Database/authMethods"
+
 export default function ProfileScreen({navigation}) {
+  const [userInfo,setUserInfo] = useState('');
+  
+  useEffect(()=>{
+    profileInfo()
+  },[])
+
+  const profileInfo=async()=>{
+    await getUserInfo().then((res) => {
+      console.log("res:",res)
+      setUserInfo(res)
+    }).catch((error)=>{
+      console.log("error",error)
+    })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -111,7 +128,7 @@ export default function ProfileScreen({navigation}) {
                 marginHorizontal: wp("4"),
               }}
             >
-              0300-1234567
+              {userInfo != "" && userInfo[0].phone}
             </Text>
           </View>
 
@@ -145,7 +162,7 @@ export default function ProfileScreen({navigation}) {
                 marginHorizontal: wp("4"),
               }}
             >
-              abc@gmail.com
+              {userInfo != "" && userInfo[0].email}
             </Text>
           </View>
 
