@@ -9,6 +9,7 @@ import {
   Platform,
   Switch,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -22,7 +23,27 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 
+
+import {loggingOut} from '../Database/authMethods'
+
+
+
+
 export default function PatientDonorScreen({ navigation }) {
+
+  const onPressLogout=async()=>{
+ 
+ await loggingOut();
+    navigation.reset({
+      index:0,
+      routes:[{name:'HomeScreen'}]
+    })   
+
+    
+
+
+}
+
   //Tooglr button states(hooks ) to toggle between screens
   const [isEnabled, setIsEnabled] = React.useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
@@ -129,10 +150,13 @@ export default function PatientDonorScreen({ navigation }) {
             </View>
           </View>
 
+            
           <View style={styles.bottomContainer}>
+          <TouchableWithoutFeedback onPress={onPressLogout}>
             <View style={styles.logOut}>
               <Text style={styles.logoutText}> Log Out</Text>
             </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </SafeAreaView>
@@ -234,9 +258,11 @@ export default function PatientDonorScreen({ navigation }) {
 
           {/* Logout Button */}
           <View style={styles.bottomContainer}>
+          <TouchableWithoutFeedback onPress={onPressLogout}>
             <View style={styles.logOut}>
               <Text style={styles.logoutText}> Log Out</Text>
             </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </SafeAreaView>

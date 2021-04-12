@@ -24,6 +24,7 @@ export async function  signUp(email, pass, phone) {
 
 export async function loggingOut() {
     await firebase.auth().signOut().catch(() => {
+    
       throw ('Unknown error occurred') 
      });
 }
@@ -82,14 +83,7 @@ export async function  getUserInfo() {
     snapshot.forEach((doc) => {
           user.push({
             email: doc.data().email,
-            key: doc.id,
-            uid:doc.data().uid,
-            ProfileName: doc.data().ProfileName,
-            imageUrl : doc.data().ProfileImage,
-            location : doc.data().location,
-            follower:doc.data().follower,
-            following:doc.data().following,
-            description:doc.data().description
+            number:doc.data().number,
           });
         });
     return user

@@ -18,7 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-export default function ProfileScreen({navigation}) {
+export default function ProfileScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -30,7 +30,7 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.leftSideContainer}>
           {/* You can navigate back on clicking this button  */}
           <AntDesign
-            onPress={() => navigation.goBack()}
+            // onPress={() => navigation.goBack()}
             name="arrowleft"
             size={26}
             color="#ffffff"
@@ -39,7 +39,12 @@ export default function ProfileScreen({navigation}) {
           <Text style={styles.profile}>Profile</Text>
         </View>
 
-        <Entypo onPress={()=>navigation.navigate('PatientDonorScreen')} name="dots-three-vertical" size={20} color="white" />
+        <Entypo
+          onPress={() => navigation.navigate("PatientDonorScreen")}
+          name="dots-three-vertical"
+          size={20}
+          color="white"
+        />
       </View>
 
       <View>
@@ -158,7 +163,6 @@ export default function ProfileScreen({navigation}) {
     </SafeAreaView>
   );
 }
-
 
 //styling for the page
 const styles = StyleSheet.create({

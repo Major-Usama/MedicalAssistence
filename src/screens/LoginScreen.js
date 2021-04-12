@@ -17,20 +17,16 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import {logIn} from "../Database/authMethods"
 import Checkbox from "expo-checkbox";
 
 
-export default function LoginScreen({ navigation }) {
+
   //For whole app I used functional components
   //In functional components we use hooks to manage states
   //These are the states to change data dynamic like textinputs or checkbox
   //And thing useState I used in call React Hook
 
-  const [text, onChangeText] = React.useState("");
-
-import { Zocial } from "@expo/vector-icons"; 
-import {logIn} from "../Database/authMethods"
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -148,7 +144,7 @@ export default function LoginScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-}
+
 
 // Styling for the page
 const styles = StyleSheet.create({
