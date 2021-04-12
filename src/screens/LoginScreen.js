@@ -17,20 +17,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import {logIn} from "../Database/authMethods"
 import Checkbox from "expo-checkbox";
-
-
-
-  //For whole app I used functional components
-  //In functional components we use hooks to manage states
-  //These are the states to change data dynamic like textinputs or checkbox
-  //And thing useState I used in call React Hook
-
+import {logIn} from "../Database/authMethods"
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
-
   const [pass, setPass] = React.useState("");
   const [isChecked, setChecked] = React.useState(true);
   
