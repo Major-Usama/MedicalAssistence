@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Navigations from './src/navigations/Navigations';
 
@@ -8,7 +7,12 @@ import Navigations from './src/navigations/Navigations';
 //Basically the whole app is running from here
 // I have import the navigation here so the whole app can run
 
+import FireBase from "./src/Database/Firebase"
+
 export default function App() {
+  useEffect(()=>{
+    FireBase
+  },[])
   return <Navigations />
 }
 

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -19,6 +20,7 @@ import {
 
 import Checkbox from "expo-checkbox";
 
+
 export default function LoginScreen({ navigation }) {
   //For whole app I used functional components
   //In functional components we use hooks to manage states
@@ -26,8 +28,30 @@ export default function LoginScreen({ navigation }) {
   //And thing useState I used in call React Hook
 
   const [text, onChangeText] = React.useState("");
+
+import { Zocial } from "@expo/vector-icons"; 
+import {logIn} from "../Database/authMethods"
+
+export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = React.useState("");
+
   const [pass, setPass] = React.useState("");
   const [isChecked, setChecked] = React.useState(true);
+  
+  const onPressLogin=async()=>{
+    if(email && pass != ''){
+    await logIn(email, pass).then(() => {
+        navigation.reset({
+          index:0,
+          routes:[{name:'ProfileScreen'}]
+        })
+    }).catch((error)=>{
+      console.log("error",error)
+    })
+    }else{
+      alert("Please fill all Fields");
+    }
+  }
 
   return (
     // This is the code for main front-end of the app which styling is done below
@@ -60,8 +84,8 @@ export default function LoginScreen({ navigation }) {
               <TextInput
                 placeholder="name@website.com"
                 style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
+                onChangeText={(text)=>setEmail(text)}
+                value={email}
               />
 
               <Entypo name="mail" size={28} color="lightgray" />
@@ -72,7 +96,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder="************"
                 style={styles.input}
                 secureTextEntry={true}
-                onChangeText={setPass}
+                onChangeText={(text)=>setPass(text)}
                 value={pass}
               />
 
@@ -97,9 +121,9 @@ export default function LoginScreen({ navigation }) {
               </Text>
             </View>
 
-            <View style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={onPressLogin}>
               <Text style={styles.loginText}>Log in</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </ImageOverlay>
       </ImageBackground>
@@ -123,6 +147,7 @@ export default function LoginScreen({ navigation }) {
       </View>
     </SafeAreaView>
   );
+}
 }
 
 // Styling for the page
@@ -214,4 +239,4 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginLeft: wp("2%"),
   },
-});
+})
