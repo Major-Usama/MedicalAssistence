@@ -24,6 +24,7 @@ export async function  signUp(email, pass, phone) {
 
 export async function loggingOut() {
     await firebase.auth().signOut().catch(() => {
+    
       throw ('Unknown error occurred') 
      });
 }
@@ -41,6 +42,33 @@ export async function  getUserInfo() {
       
     snapshot.forEach((doc) => {
           user.push({
+
+            email: doc.data().email,
+            number:doc.data().number,
+          });
+        });
+    return user
+}
+
+export async function  getSellerInfo(uid) {
+      let user=[];
+      const currentUser = firebase.auth().currentUser;
+      let snapshot = await firebase.firestore()
+      .collection('users')
+      .where('uid', '==', uid)
+      .get().catch(() => {
+        throw ('no seller data found') 
+       });
+      
+      snapshot.forEach((doc) => {
+        let following = doc.data().follower
+        console.log("following:",following)
+        let isFollowed = following.some((uid)=> {
+          return uid == currentUser.uid
+        })
+          user.push({
+            key: doc.id,
+
             key: doc.id,
             uid:doc.data().uid,
             email: doc.data().email,

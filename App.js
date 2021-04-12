@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Navigations from './src/navigations/Navigations';
+import { LogBox } from 'react-native';
 
 
 //This is our app root folder 
@@ -10,6 +11,7 @@ import Navigations from './src/navigations/Navigations';
 import FireBase from "./src/Database/Firebase"
 
 export default function App() {
+  LogBox.ignoreLogs(['Warning: ...']);
   useEffect(()=>{
     FireBase
   },[])

@@ -13,6 +13,8 @@ import {
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
 
+
+
 export default function AmbulanceLocationScreen() {
   return (
     <SafeAreaView style={styles.container}>
