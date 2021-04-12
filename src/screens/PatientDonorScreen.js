@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     width: wp("80%"),
     height: hp("9%"),
     alignSelf: "center",
-    marginTop: hp("20"),
+    marginTop: hp("10% "),
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#3D3D3D",

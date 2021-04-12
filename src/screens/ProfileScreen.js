@@ -6,6 +6,7 @@ import {
   StatusBar,
   SafeAreaView,
   Image,
+  ScrollView,
 } from "react-native";
 import {
   Entypo,
@@ -80,7 +81,8 @@ export default function ProfileScreen({navigation}) {
       </View>
 
       {/* Profile Detail Section like name, age ,gender etc */}
-
+     
+     <ScrollView>
       <View style={styles.titleContainer}>
         <View style={styles.avatar}>
           <Ionicons
@@ -98,16 +100,16 @@ export default function ProfileScreen({navigation}) {
         <Text style={styles.age}>21</Text>
       </View>
 
-      <View style={{ ...styles.ageContainer, marginTop: hp("2.5") }}>
+      <View style={{ ...styles.ageContainer,  }}>
         <Text style={styles.gender}>Gender</Text>
         <Text style={styles.gender}>Male</Text>
       </View>
 
-      <View style={{ ...styles.ageContainer, marginTop: hp("2.5") }}>
+      <View style={{ ...styles.ageContainer, marginTop: hp("0") }}>
         <Text style={styles.bGroup}>Blood Group</Text>
         <Text style={styles.bGroup}>A-</Text>
       </View>
-
+      </ScrollView>
       {/* Bottom Detail Section for email and number */}
 
       <View style={styles.bottomContainer}>
@@ -255,6 +257,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: wp("85"),
     alignSelf: "flex-end",
+    bottom:10
   },
 
   age: {
