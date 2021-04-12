@@ -8,17 +8,21 @@ import {
   View,
 } from "react-native";
 
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo, MaterialIcons ,Zocial} from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ImageOverlay from "react-native-image-overlay";
-import { Zocial } from "@expo/vector-icons";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {signUp} from "../Database/authMethods"
 
 export default function SignUpScreen({ navigation }) {
+
+  //States to do dynamic things 
+  const [text, onChangeText] = React.useState("");
+
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [pass2, setPass2] = React.useState("");
@@ -45,6 +49,8 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      {/* Main container with background image and signup inputs with it */}
       <ImageBackground
         style={{ height: hp("85%"), width: wp("100%") }}
         source={require("../images/Ambulance.jpeg")}
@@ -138,6 +144,8 @@ export default function SignUpScreen({ navigation }) {
         </ImageOverlay>
       </ImageBackground>
 
+      {/* Social logins Buttons Facebook and Google */}
+
       <View style={styles.socialContainer}>
         <View style={styles.socialButton}>
           <View style={styles.fbContainer}>
@@ -146,6 +154,8 @@ export default function SignUpScreen({ navigation }) {
           </View>
         </View>
 
+
+        
         <View style={{ ...styles.socialButton, backgroundColor: "#E54F34" }}>
           <View style={styles.fbContainer}>
             <Entypo name="google-" size={24} color="#ffffff" />

@@ -22,12 +22,19 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 
-export default function PatientDonorScreen({navigation}) {
+export default function PatientDonorScreen({ navigation }) {
+  //Tooglr button states(hooks ) to toggle between screens
   const [isEnabled, setIsEnabled] = React.useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  //Condition to switch between screens on clicking the switch
+  //by default its fault it will show the Search Ambulance screen
+  //but when you toogle it the state will change to true and the screens content will change
+  //This is basically called conditional rendering in React Native
   if (isEnabled === false) {
     return (
       <SafeAreaView style={styles.container}>
+        {/* This is Search Ambulance Section */}
         <StatusBar
           barStyle="white-content"
           hidden={false}
@@ -50,32 +57,30 @@ export default function PatientDonorScreen({navigation}) {
             </View>
           </ImageOverlay>
 
-
-
-          <TouchableWithoutFeedback onPress={()=>navigation.navigate('AmbulanceLocationScreen')}>
-          <View
-            style={{
-              ...styles.bottomLists,
-              backgroundColor: "#EB0000",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 5,
-              },
-              shadowOpacity: 0.34,
-              shadowRadius: 6.27,
-
-              elevation: 10,
-            }}
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("AmbulanceLocationScreen")}
           >
-              
-            <View style={styles.listcontainer}>
-              <Fontisto name="ambulance" size={24} color="#fff" />
-              <Text style={styles.listText}>Call Ambulence</Text>
+            <View
+              style={{
+                ...styles.bottomLists,
+                backgroundColor: "#EB0000",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+
+                elevation: 10,
+              }}
+            >
+              <View style={styles.listcontainer}>
+                <Fontisto name="ambulance" size={24} color="#fff" />
+                <Text style={styles.listText}>Call Ambulence</Text>
+              </View>
             </View>
-          </View>
-            </TouchableWithoutFeedback>
-          
+          </TouchableWithoutFeedback>
 
           <View style={styles.bottomLists}>
             <View style={styles.listcontainer}>
@@ -96,6 +101,8 @@ export default function PatientDonorScreen({navigation}) {
               </View>
             </View>
           </View>
+
+          {/* I have commented the code for notifications and get help if needed in future */}
 
           {/* <View style={styles.bottomLists}>
 
@@ -133,6 +140,7 @@ export default function PatientDonorScreen({navigation}) {
   } else {
     return (
       <SafeAreaView style={styles.container}>
+        {/* This is the Search Donor Screen */}
         <StatusBar
           barStyle="white-content"
           hidden={false}
@@ -154,27 +162,29 @@ export default function PatientDonorScreen({navigation}) {
               <Text style={styles.name}>Awais Murtaza</Text>
             </View>
           </ImageOverlay>
-        <TouchableWithoutFeedback onPress={()=>navigation.navigate('DonorLocationScreen')}>
-          <View
-            style={{
-              ...styles.bottomLists,
-              backgroundColor: "#EB0000",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 5,
-              },
-              shadowOpacity: 0.34,
-              shadowRadius: 6.27,
-
-              elevation: 10,
-            }}
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("DonorLocationScreen")}
           >
-            <View style={styles.listcontainer}>
-              <FontAwesome name="search-minus" size={24} color="#fff" />
-              <Text style={styles.listText}>Search Hospital</Text>
+            <View
+              style={{
+                ...styles.bottomLists,
+                backgroundColor: "#EB0000",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+
+                elevation: 10,
+              }}
+            >
+              <View style={styles.listcontainer}>
+                <FontAwesome name="search-minus" size={24} color="#fff" />
+                <Text style={styles.listText}>Search Hospital</Text>
+              </View>
             </View>
-          </View>
           </TouchableWithoutFeedback>
 
           <View style={styles.bottomLists}>
@@ -222,6 +232,7 @@ export default function PatientDonorScreen({navigation}) {
             </View>
           </View>
 
+          {/* Logout Button */}
           <View style={styles.bottomContainer}>
             <View style={styles.logOut}>
               <Text style={styles.logoutText}> Log Out</Text>
@@ -233,6 +244,7 @@ export default function PatientDonorScreen({navigation}) {
   }
 }
 
+//Styling for the app
 const styles = StyleSheet.create({
   container: {
     flex: 1,

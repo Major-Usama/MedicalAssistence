@@ -1,4 +1,5 @@
 import React from "react";
+//All the import required for the project
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,6 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+//This is being used to make to screen responsive on all devices
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,6 +26,7 @@ import {
 
 import ImageOverlay from "react-native-image-overlay";
 export default function HomeScreen({navigation}) {
+  //Home Screen 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -111,6 +114,9 @@ export default function HomeScreen({navigation}) {
     </SafeAreaView>
   );
 }
+
+
+//Styling for the app
 
 const styles = StyleSheet.create({
   container: {

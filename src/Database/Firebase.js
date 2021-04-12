@@ -1,3 +1,7 @@
+// This is a firebase config file
+// This code represent the react native app connection with firebase database\
+//which we can use throughout the whole app 
+
 import * as firebase from 'firebase';
 
 var firebaseConfig = {
