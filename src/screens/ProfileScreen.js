@@ -28,6 +28,7 @@ export default function ProfileScreen({navigation}) {
       />
       <View style={styles.header}>
         <View style={styles.leftSideContainer}>
+          {/* You can navigate back on clicking this button  */}
           <AntDesign
             onPress={() => navigation.goBack()}
             name="arrowleft"
@@ -158,6 +159,8 @@ export default function ProfileScreen({navigation}) {
   );
 }
 
+
+//styling for the page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

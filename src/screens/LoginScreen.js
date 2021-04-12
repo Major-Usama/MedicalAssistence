@@ -7,22 +7,32 @@ import {
   Text,
   View,
 } from "react-native";
+
+//we are using this Image overlay inorder to place things over the image
 import ImageOverlay from "react-native-image-overlay";
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+//These are the icons provided by expo itself
+import { AntDesign, Entypo, MaterialIcons, Zocial } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
 import Checkbox from "expo-checkbox";
-import { Zocial } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
+  //For whole app I used functional components
+  //In functional components we use hooks to manage states
+  //These are the states to change data dynamic like textinputs or checkbox
+  //And thing useState I used in call React Hook
+
   const [text, onChangeText] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [isChecked, setChecked] = React.useState(true);
 
   return (
+    // This is the code for main front-end of the app which styling is done below
     <SafeAreaView style={styles.container}>
+      {/* Main container with background image and login inputs with it */}
       <ImageBackground
         style={{ height: hp("85%"), width: wp("100%") }}
         source={require("../images/Ambulance.jpeg")}
@@ -94,6 +104,8 @@ export default function LoginScreen({ navigation }) {
         </ImageOverlay>
       </ImageBackground>
 
+      {/* Social logins Buttons Facebook and Google */}
+
       <View style={styles.socialContainer}>
         <View style={styles.socialButton}>
           <View style={styles.fbContainer}>
@@ -113,6 +125,7 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
+// Styling for the page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
