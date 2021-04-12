@@ -29,46 +29,6 @@ export async function loggingOut() {
      });
 }
 
-export async function passwordReset(mail) {
-    await firebase.auth().sendPasswordResetEmail(mail).catch(() => {
-      throw ('some internal error occured') 
-     });
-}
-
-export async function  updateProfileInfo(profileImage,profileName,location,description) {
-      let refId;
-      const currentUser = firebase.auth().currentUser;
-      let snapshot = await firebase.firestore()
-      .collection('users')
-      .where('uid', '==', currentUser.uid)
-      .get().catch(() => {
-        throw ('user token is expired') 
-       });
-      snapshot.forEach(doc =>refId = doc.id);
-      const imageRef = firebase.storage().ref(`user/${profileImage.fileName}`)
-      await imageRef.putFile(profileImage.uri).catch(() => {
-         throw ('image Uploading failed') 
-        })
-      
-      const url = await imageRef.getDownloadURL().catch(() => { 
-        throw ('image Not Correctly Uploaded')
-       });
-
-      const updateDetail = {
-        ProfileImage:url,
-        ProfileName:profileName,
-        location:location,
-        description:description
-      };
-
-      await firebase.firestore()
-      .collection('users')
-      .doc(refId)
-      .update(updateDetail)
-      .catch(() => { 
-        throw ('Unknown error occurred.')
-     });
-}
 
 export async function  getUserInfo() {
     let user=[];
@@ -82,6 +42,7 @@ export async function  getUserInfo() {
       
     snapshot.forEach((doc) => {
           user.push({
+
             email: doc.data().email,
             number:doc.data().number,
           });
@@ -107,16 +68,12 @@ export async function  getSellerInfo(uid) {
         })
           user.push({
             key: doc.id,
-            email: doc.data().email,
+
+            key: doc.id,
             uid:doc.data().uid,
-            ProfileName: doc.data().ProfileName,
-            imageUrl : doc.data().ProfileImage,
-            location : doc.data().location,
-            follower:doc.data().follower,
-            following:doc.data().following,
-            isFollowed:isFollowed,
-            description:doc.data().description
+            email: doc.data().email,
+            phone : doc.data().phone,
           });
         });
-  return user
+    return user
 }
