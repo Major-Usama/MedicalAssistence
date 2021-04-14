@@ -26,13 +26,16 @@ import {
 
 import ImageOverlay from "react-native-image-overlay";
 export default function HomeScreen({navigation}) {
+     
+  
+
   //Home Screen 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="white-content"
-        hidden={true}
-        backgroundColor="#534C46"
+        hidden={false}
+        backgroundColor="#C79278"
       />
 
       <ImageBackground
@@ -41,11 +44,11 @@ export default function HomeScreen({navigation}) {
       >
         {/* Header */}
 
-        <View style={styles.statusBar}>
+        {/* <View style={styles.statusBar}>
           <MaterialIcons name="network-cell" size={14} color="#ffffff" />
           <MaterialCommunityIcons name="battery-50" size={14} color="#ffffff" />
           <Text style={styles.time}>4:20</Text>
-        </View>
+        </View> */}
         <View style={styles.header}>
           <View style={styles.leftSideContainer}>
             <Entypo name="menu" size={28} color="#ffffff" />
@@ -57,11 +60,11 @@ export default function HomeScreen({navigation}) {
 
         <ImageOverlay
           containerStyle={{
-            width: wp("90%"),
-            height: hp("47%"),
+            width: wp("100%"),
+            height: hp("57%"),
             alignSelf: "center",
             position: "absolute",
-            top: hp("15%"),
+            top: hp("8%"),
           }}
           overlayColor="#505D5E"
           rounded={3}
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    width: wp("90%"),
+    width: wp("100%"),
     height: hp("8%"),
     backgroundColor: "#DD9B7C",
     alignSelf: "center",
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: wp("5%"),
     position: "absolute",
-    top: hp("7%"),
+    
   },
   aboutUS: {
     fontSize: 28,
@@ -155,6 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C78E73",
     position: "absolute",
     top: hp("4.5%"),
+    
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     alignSelf: "center",
     position: "absolute",
-    top: hp("38%"),
+    top: hp("42%"),
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
