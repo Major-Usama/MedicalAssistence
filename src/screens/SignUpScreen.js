@@ -1,14 +1,16 @@
-import React from "react";
+import React,{useRef} from "react";
 import {
   ImageBackground,
   SafeAreaView,
   StyleSheet,
   TextInput,
   Text,
+  Dimensions,
   View,
 } from "react-native";
 
-import { AntDesign, Entypo, MaterialIcons ,Zocial} from "@expo/vector-icons";
+
+import { AntDesign, Entypo, MaterialIcons ,Zocial,FontAwesome} from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,21 +19,45 @@ import ImageOverlay from "react-native-image-overlay";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {signUp} from "../Database/authMethods"
-
+import PhoneInput from 'react-native-phone-number-input';
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height
 export default function SignUpScreen({ navigation }) {
+
+
+
+  // const validate = (email) => {
+  //   console.log(email);
+  //   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   if (reg.test(email) === false) {
+  //     show
+  //     setEmail(email)
+  //     return false;
+  //   }
+  //   else {
+  //     show2
+  //     setEmail(email)
+  //     console.log("Email is Correct");
+  //   }
+  // }
 
   //States to do dynamic things 
   const [text, onChangeText] = React.useState("");
-
+  const [value, setValue] = React.useState();
+  const [show,setShow]=React.useState("Email is not valid");
+  const [show2,setShow2]=React.useState("Email is  valid");
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [pass2, setPass2] = React.useState("");
   const [phone, setPhone] = React.useState("");
-
-  const onPressSignUp=async()=>{
-    if(email && pass && pass2 && phone != ''){
+  const phoneInput = useRef(null);
+  const onPressSignUp=()=>{
+    if(email && pass && pass2 && phone != ''){                                                                                                                                                                  
+    
     if (pass === pass2){
-    await signUp(email, pass,phone).then(() => {
+      if(pass.length>7)
+      {
+     signUp(email, pass,phone).then(() => {
         navigation.reset({
           index:0,
           routes:[{name:'ProfileScreen'}]
@@ -39,9 +65,15 @@ export default function SignUpScreen({ navigation }) {
     }).catch((error)=>{
       console.log("error",error)
     })
+  }
+  else{
+    alert("add minimum 8 chracter's");
+  }
     }else{
     alert("Password doesn't match");
     }
+ 
+    
     }else{
       alert("Please fill all Fields");
     }
@@ -52,11 +84,11 @@ export default function SignUpScreen({ navigation }) {
 
       {/* Main container with background image and signup inputs with it */}
       <ImageBackground
-        style={{ height: hp("85%"), width: wp("100%") }}
+        style={{ height: hp("100%"), width: wp("100%") }}
         source={require("../images/Ambulance.jpeg")}
       >
         <ImageOverlay
-          height={hp("85%")}
+          height={hp("100%")}
           contentPosition="top"
           overlayColor="#344246"
           overlayAlpha={0.8}
@@ -74,11 +106,16 @@ export default function SignUpScreen({ navigation }) {
           />
 
           <View>
+            <View >
+                
+           
+            </View>
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Email address"
                 style={styles.input}
-                onChangeText={(text)=>setEmail(text)}
+                keyboardType='email-address'
+                onChangeText={(email) => setEmail(email) }
                 value={email}
               />
 
@@ -90,6 +127,7 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Password"
                 style={styles.input}
                 secureTextEntry={true}
+                
                 onChangeText={(text)=>setPass(text)}
                 value={pass}
               />
@@ -109,17 +147,34 @@ export default function SignUpScreen({ navigation }) {
               <MaterialIcons name="lock" size={28} color="lightgray" />
             </View>
 
+            
             <View style={styles.commonContainer}>
-              <TextInput
+            <PhoneInput
+              ref={phoneInput}
+              defaultValue={phone}
+              defaultCode="US"
+              containerStyle={styles.input}
+              textInputStyle={{height:70,}}
+              onChangeText={(number) => {
+                setPhone(number);
+              }}
+
+              
+              
+            />
+              <FontAwesome name="phone" size={24} color="lightgray" />
+            </View>
+
+
+              {/* <TextInput
                 placeholder="Phone number"
                 style={styles.input}
                 keyboardType="number-pad"
                 onChangeText={(number)=>setPhone(number)}
                 value={phone}
-              />
+              /> */}
 
-              <Entypo name="phone" size={24} color="lightgray" />
-            </View>
+             
 
             <TouchableOpacity
               onPress={onPressSignUp}
@@ -145,7 +200,7 @@ export default function SignUpScreen({ navigation }) {
       </ImageBackground>
 
       {/* Social logins Buttons Facebook and Google */}
-
+{/* 
       <View style={styles.socialContainer}>
         <View style={styles.socialButton}>
           <View style={styles.fbContainer}>
@@ -162,7 +217,7 @@ export default function SignUpScreen({ navigation }) {
             <Text style={styles.logintext}>Log in</Text>
           </View>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }
@@ -245,5 +300,15 @@ const styles = StyleSheet.create({
   logintext: {
     color: "#ffffff",
     marginLeft: wp("2%"),
+  },
+  inputView: {
+    backgroundColor: '#F6F6F6',
+    width: WIDTH - 70,
+    flexDirection: 'row',
+    borderRadius: 25,
+    padding: 7,
+    marginVertical: 10,
+    alignSelf: 'center',
+    marginHorizontal: 50,
   },
 });

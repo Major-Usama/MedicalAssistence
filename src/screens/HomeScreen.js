@@ -19,15 +19,13 @@ import {
 } from "react-native-responsive-screen";
 
 import {
-  MaterialIcons,
-  MaterialCommunityIcons,
   Entypo,
 } from "@expo/vector-icons";
 
 import ImageOverlay from "react-native-image-overlay";
 export default function HomeScreen({navigation}) {
      
-  
+  const[show,setShow]=React.useState(false);
 
   //Home Screen 
   return (
@@ -51,11 +49,11 @@ export default function HomeScreen({navigation}) {
         </View> */}
         <View style={styles.header}>
           <View style={styles.leftSideContainer}>
-            <Entypo name="menu" size={28} color="#ffffff" />
+           
             <Text style={styles.aboutUS}>About Us</Text>
           </View>
 
-          <Entypo name="dots-three-vertical" size={20} color="white" />
+         
         </View>
 
         <ImageOverlay
@@ -87,14 +85,23 @@ export default function HomeScreen({navigation}) {
                 ambulance and take the patient to a{"\n"}
                 hospital as fast as possible. The{"\n"}
                 application will provide a platform, where people{"\n"}
+                
+                
+              </Text>
+
+              <View style={{display:show?"flex":"none"}} >
+
+                <Text style={{...styles.textDetail,top:hp('24')}}>
                 willing to help others in medical{"\n"}
                 emergencies can register. The public users will be{"\n"}
                 able to seek help in medical{"\n"}
                 emergency conditions.
-              </Text>
+                </Text>
+
+              </View>
 
               <View style={styles.readButton}>
-                <Text style={styles.readText}>Read More</Text>
+                <Text  onPress={()=>setShow(!show)} style={styles.readText}>Read More</Text>
               </View>
             </View>
           </View>

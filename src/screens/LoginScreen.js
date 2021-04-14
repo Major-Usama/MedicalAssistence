@@ -45,11 +45,11 @@ export default function LoginScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       {/* Main container with background image and login inputs with it */}
       <ImageBackground
-        style={{ height: hp("85%"), width: wp("100%") }}
+        style={{ height: hp("100%%"), width: wp("100%") }}
         source={require("../images/Ambulance.jpeg")}
       >
         <ImageOverlay
-          height={hp("85%")}
+          height={hp("100%")}
           contentPosition="top"
           overlayColor="#344246"
           overlayAlpha={0.8}

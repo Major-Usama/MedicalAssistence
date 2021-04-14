@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,24 +20,25 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import { getUserInfo } from "../Database/authMethods";
 
-import {getUserInfo} from "../Database/authMethods"
+export default function ProfileScreen({ navigation }) {
+  const [userInfo, setUserInfo] = useState("");
 
-export default function ProfileScreen({navigation}) {
-  const [userInfo,setUserInfo] = useState('');
-  
-  useEffect(()=>{
-    profileInfo()
-  },[])
+  useEffect(() => {
+    profileInfo();
+  }, []);
 
-  const profileInfo=async()=>{
-    await getUserInfo().then((res) => {
-      console.log("res:",res)
-      setUserInfo(res)
-    }).catch((error)=>{
-      console.log("error",error)
-    })
-  }
+  const profileInfo = async () => {
+    await getUserInfo()
+      .then((res) => {
+        console.log("res:", res);
+        setUserInfo(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,34 +82,34 @@ export default function ProfileScreen({navigation}) {
       </View>
 
       {/* Profile Detail Section like name, age ,gender etc */}
-     
-     <ScrollView>
-      <View style={styles.titleContainer}>
-        <View style={styles.avatar}>
-          <Ionicons
-            style={{ position: "absolute", top: 5 }}
-            name="person"
-            size={44}
-            color="#ffffff"
-          />
+
+      <ScrollView>
+        <View style={styles.titleContainer}>
+          <View style={styles.avatar}>
+            <Ionicons
+              style={{ position: "absolute", top: 5 }}
+              name="person"
+              size={44}
+              color="#ffffff"
+            />
+          </View>
+          <Text style={styles.title}>Awais Murtaza</Text>
         </View>
-        <Text style={styles.title}>Awais Murtaza</Text>
-      </View>
 
-      <View style={styles.ageContainer}>
-        <Text style={styles.age}>age</Text>
-        <Text style={styles.age}>21</Text>
-      </View>
+        <View style={styles.ageContainer}>
+          <Text style={styles.age}>age</Text>
+          <Text style={styles.age}>21</Text>
+        </View>
 
-      <View style={{ ...styles.ageContainer,  }}>
-        <Text style={styles.gender}>Gender</Text>
-        <Text style={styles.gender}>Male</Text>
-      </View>
+        <View style={{ ...styles.ageContainer, marginTop: hp("2") }}>
+          <Text style={styles.gender}>Gender</Text>
+          <Text style={styles.gender}>Male</Text>
+        </View>
 
-      <View style={{ ...styles.ageContainer, marginTop: hp("0") }}>
-        <Text style={styles.bGroup}>Blood Group</Text>
-        <Text style={styles.bGroup}>A-</Text>
-      </View>
+        <View style={{ ...styles.ageContainer, marginTop: hp("2") }}>
+          <Text style={styles.bGroup}>Blood Group</Text>
+          <Text style={styles.bGroup}>A-</Text>
+        </View>
       </ScrollView>
       {/* Bottom Detail Section for email and number */}
 
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: wp("85"),
     alignSelf: "flex-end",
-    bottom:10
+    bottom: 10,
   },
 
   age: {
