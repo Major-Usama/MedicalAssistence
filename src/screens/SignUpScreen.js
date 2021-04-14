@@ -23,41 +23,26 @@ import PhoneInput from 'react-native-phone-number-input';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height
 export default function SignUpScreen({ navigation }) {
-
-
-
-  // const validate = (email) => {
-  //   console.log(email);
-  //   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  //   if (reg.test(email) === false) {
-  //     show
-  //     setEmail(email)
-  //     return false;
-  //   }
-  //   else {
-  //     show2
-  //     setEmail(email)
-  //     console.log("Email is Correct");
-  //   }
-  // }
-
-  //States to do dynamic things 
-  const [text, onChangeText] = React.useState("");
-  const [value, setValue] = React.useState();
-  const [show,setShow]=React.useState("Email is not valid");
-  const [show2,setShow2]=React.useState("Email is  valid");
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [pass2, setPass2] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const phoneInput = useRef(null);
-  const onPressSignUp=()=>{
+  
+  const validateEmail = () => {
+    var re = /^[a-zA-Z0-9]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,7}$/;
+    return re.test(email);
+  };
+
+  const onPressSignUp=async()=>{
     if(email && pass && pass2 && phone != ''){                                                                                                                                                                  
-    
+    let validMail;
+    validMail=validateEmail()
+    if(validMail){
     if (pass === pass2){
       if(pass.length>7)
       {
-     signUp(email, pass,phone).then(() => {
+    await signUp(email, pass,phone).then(() => {
         navigation.reset({
           index:0,
           routes:[{name:'ProfileScreen'}]
@@ -72,8 +57,9 @@ export default function SignUpScreen({ navigation }) {
     }else{
     alert("Password doesn't match");
     }
- 
-    
+    }else{
+      alert("Please Enter Valid Email");  
+    }
     }else{
       alert("Please fill all Fields");
     }

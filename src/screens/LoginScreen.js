@@ -25,8 +25,16 @@ export default function LoginScreen({ navigation }) {
   const [pass, setPass] = React.useState("");
   const [isChecked, setChecked] = React.useState(true);
   
+  const validateEmail = () => {
+    var re = /^[a-zA-Z0-9]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,7}$/;
+    return re.test(email);
+  };
+
   const onPressLogin=async()=>{
     if(email && pass != ''){
+    let validMail;
+    validMail=validateEmail()
+    if(validMail){  
     await logIn(email, pass).then(() => {
         navigation.reset({
           index:0,
@@ -35,6 +43,9 @@ export default function LoginScreen({ navigation }) {
     }).catch((error)=>{
       console.log("error",error)
     })
+    }else{
+    alert("Please Enter Valid Email");  
+    }
     }else{
       alert("Please fill all Fields");
     }
