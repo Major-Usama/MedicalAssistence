@@ -42,9 +42,8 @@ export async function  getUserInfo() {
       
     snapshot.forEach((doc) => {
           user.push({
-
             email: doc.data().email,
-            number:doc.data().number,
+            phone:doc.data().phone,
           });
         });
     return user
