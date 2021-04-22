@@ -1,4 +1,4 @@
-import React,{useRef} from "react";
+import React,{useRef,useState,useEffect} from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -10,23 +10,23 @@ import {
 } from "react-native";
 
 import SelectPicker from "react-native-form-select-picker";
-import { AntDesign, Entypo, MaterialIcons ,Zocial,FontAwesome,MaterialCommunityIcons} from "@expo/vector-icons";
+import { AntDesign, Entypo, MaterialIcons ,Zocial,FontAwesome} from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ImageOverlay from "react-native-image-overlay";
-
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {signUp} from "../Database/authMethods"
 import PhoneInput from 'react-native-phone-number-input';
+import { getUserInfo } from "../Database/authMethods";
+import * as firebase from "firebase";
+import "firebase/firestore";
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height
-
+const HEIGHT = Dimensions.get('window').height;
 const options = ["Male","Female"];
 const options2 = ["Ab+","A-B-","A+","A-","O+","O-","B+","B-"];
-
-export default function SignUpScreen({ navigation }) {
+export default function EditProfileScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [pass2, setPass2] = React.useState("");
@@ -36,42 +36,52 @@ export default function SignUpScreen({ navigation }) {
   const [name, setName] = React.useState("");
   const [bgroup, setBgroup] = React.useState("");
   const phoneInput = useRef(null);
-  
-  const validateEmail = () => {
-    var re = /^[a-zA-Z0-9]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,7}$/;
-    return re.test(email);
+
+
+  const [userInfo, setUserInfo] = useState("");
+
+  useEffect(() => {
+    profileInfo();
+  }, []);
+
+  const profileInfo = async () => {
+    await getUserInfo()
+      .then((res) => {
+        console.log("res:", res);
+        setUserInfo(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
-  const onPressSignUp=async()=>{
-    if(email && pass && pass2 && phone &&age &&gender&&bgroup&&name != ''){                                                                                                                                                                  
-    let validMail;
-    validMail=validateEmail()
-    if(validMail){
-    if (pass === pass2){
-      if(pass.length>7)
-      {
-    await signUp(email, pass,phone,age,gender,bgroup,name).then(() => {
-        navigation.reset({
-          index:0,
-          routes:[{name:'ProfileScreen'}]
-        })
-    }).catch((error)=>{
-      console.log("error",error)
+   function updateUser() {
+   
+    const updateDBRef = firebase.firestore().collection('users').doc();
+    updateDBRef.set({
+      name: name,
+      email: email,
+      
+    }).then((docRef) => {
+     setEmail(""),
+     setName("")
+  
     })
+    .catch((error) => {
+      console.error("Error: ", error);
+     
+    });
   }
-  else{
-    alert("add minimum 8 chracter's");
-  }
-    }else{
-    alert("Password doesn't match");
-    }
-    }else{
-      alert("Please Enter Valid Email");  
-    }
-    }else{
-      alert("Please fill all Fields");
-    }
-  }
+
+
+ 
+
+  
+
+
+  
+  
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -165,7 +175,7 @@ export default function SignUpScreen({ navigation }) {
       ))}
     </SelectPicker>
              
-    <MaterialCommunityIcons name="gender-male" size={28} color="lightgray" />
+              <MaterialIcons name="date-range" size={28} color="lightgray" />
             </View>
 
 
@@ -243,10 +253,10 @@ export default function SignUpScreen({ navigation }) {
              
 
             <TouchableOpacity
-              onPress={onPressSignUp}
+            
             >
               <View style={styles.loginButton}>
-                <Text style={styles.loginText}>Sign Up</Text>
+                <Text style={styles.loginText}>Update</Text>
               </View>
             </TouchableOpacity>
 

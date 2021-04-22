@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "MedicalAssistanceAppss",
-    "slug": "medicalassistanceappss",
-    "version": "1.0.1",
+    "name": "MedicalAssistanceAppsss",
+    "slug": "medicalassistanceappsss",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,7 +25,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.devusama.MedicalAssistence",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

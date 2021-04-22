@@ -9,6 +9,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import PatientDonorScreen from '../screens/PatientDonorScreen';
 import AmbulanceLocationScreen from '../screens/AmbulanceLocationScreen';
 import DonorLocationScreen from '../screens/DonorLocationScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 //This is the code to set navigations in order to neavigate on various clicks
 //For navigation we use place the screens in Stacks ,  
@@ -23,6 +24,7 @@ function Navigations() {
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
         <Stack.Screen name="PatientDonorScreen" component={PatientDonorScreen} />
         <Stack.Screen name="AmbulanceLocationScreen" component={AmbulanceLocationScreen} />
         <Stack.Screen name="DonorLocationScreen" component={DonorLocationScreen} />

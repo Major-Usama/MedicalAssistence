@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import {
   Entypo,
@@ -59,6 +60,13 @@ export default function ProfileScreen({ navigation }) {
 
           <Text style={styles.profile}>Profile</Text>
         </View>
+          
+        <TouchableOpacity onPress={()=>navigation.navigate('EditProfileScreen')}>
+          
+        <Text  style={styles.editprofileText}>Edit Profile</Text>
+
+        </TouchableOpacity>
+
 
         <Entypo
           onPress={() => navigation.navigate("PatientDonorScreen")}
@@ -93,22 +101,26 @@ export default function ProfileScreen({ navigation }) {
               color="#ffffff"
             />
           </View>
-          <Text style={styles.title}>Awais Murtaza</Text>
+          <Text style={styles.title}>{userInfo != "" && userInfo[0].name}</Text>
         </View>
 
         <View style={styles.ageContainer}>
           <Text style={styles.age}>age</Text>
-          <Text style={styles.age}>21</Text>
+          <Text style={styles.age}>{userInfo != "" && userInfo[0].age}</Text>
         </View>
 
         <View style={{ ...styles.ageContainer, marginTop: hp("2") }}>
           <Text style={styles.gender}>Gender</Text>
-          <Text style={styles.gender}>Male</Text>
+          <Text style={styles.gender}>
+            {userInfo != "" && userInfo[0].gender}
+          </Text>
         </View>
 
         <View style={{ ...styles.ageContainer, marginTop: hp("2") }}>
           <Text style={styles.bGroup}>Blood Group</Text>
-          <Text style={styles.bGroup}>A-</Text>
+          <Text style={styles.bGroup}>
+            {userInfo != "" && userInfo[0].bgroup}
+          </Text>
         </View>
       </ScrollView>
       {/* Bottom Detail Section for email and number */}
@@ -302,4 +314,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
+  editprofileText:
+  {
+    color:'#fff',
+    fontWeight:'bold',
+    textAlign:'center',
+  }
 });

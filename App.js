@@ -11,7 +11,8 @@ import { LogBox } from 'react-native';
 import FireBase from "./src/Database/Firebase"
 
 export default function App() {
-  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   useEffect(()=>{
     FireBase
   },[])
