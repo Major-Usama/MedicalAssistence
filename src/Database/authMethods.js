@@ -1,6 +1,11 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 
+
+//This is our main database quries file where we have perform the crud operations
+
+//These are all firebase built in functions provided .
+//This first function here we have is sign up to crate a new user
 export async function signUp(email, pass, phone, age, gender, bgroup, name) {
   await firebase.auth().createUserWithEmailAndPassword(email, pass).catch((error) => {
     throw error
@@ -22,6 +27,8 @@ export async function signUp(email, pass, phone, age, gender, bgroup, name) {
   })
 }
 
+
+//This is a firebase login function to give access to the useraccount
 export async function logIn(mail, pass) {
   await firebase.auth().signInWithEmailAndPassword(mail, pass).catch(() => {
     throw ('email or password is incorrect!')
@@ -35,6 +42,8 @@ export async function loggingOut() {
   });
 }
 
+
+//This function is to fetch the user info from the Firebase database and show on the our UI
 export async function getUserInfo() {
   let user = [];
   const currentUser = firebase.auth().currentUser;
@@ -58,6 +67,9 @@ export async function getUserInfo() {
   });
   return user
 }
+
+
+//This is our built in firebase function to update our data in the database
 
 export async function updateProfileInfo(key, email, nameValue, age, gender, bgroup, phone) {
   const updateDetail = {

@@ -1,4 +1,4 @@
-import React,{useRef} from "react";
+import React, { useRef } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -10,7 +10,14 @@ import {
 } from "react-native";
 
 import SelectPicker from "react-native-form-select-picker";
-import { AntDesign, Entypo, MaterialIcons ,Zocial,FontAwesome,MaterialCommunityIcons} from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  MaterialIcons,
+  Fontisto,
+  Foundation,
+  FontAwesome,
+} from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,13 +25,13 @@ import {
 import ImageOverlay from "react-native-image-overlay";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {signUp} from "../Database/authMethods"
-import PhoneInput from 'react-native-phone-number-input';
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height
+import { signUp } from "../Database/authMethods";
+import PhoneInput from "react-native-phone-number-input";
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
 
-const options = ["Male","Female"];
-const options2 = ["Ab+","A-B-","A+","A-","O+","O-","B+","B-"];
+const options = ["Male", "Female"];
+const options2 = ["Ab+", "A-B-", "A+", "A-", "O+", "O-", "B+", "B-"];
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -36,46 +43,60 @@ export default function SignUpScreen({ navigation }) {
   const [name, setName] = React.useState("");
   const [bgroup, setBgroup] = React.useState("");
   const phoneInput = useRef(null);
-  
+
+  //This line of code is for validating the  email format
   const validateEmail = () => {
     var re = /^[a-zA-Z0-9]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\.[a-zA-Z]{2,7}$/;
     return re.test(email);
   };
 
-  const onPressSignUp=async()=>{
-    if(email && pass && pass2 && phone &&age &&gender&&bgroup&&name != ''){                                                                                                                                                                  
-    let validMail;
-    validMail=validateEmail()
-    if(validMail){
-    if (pass === pass2){
-      if(pass.length>7)
-      {
-    await signUp(email, pass,phone,age,gender,bgroup,name).then(() => {
-        navigation.reset({
-          index:0,
-          routes:[{name:'ProfileScreen'}]
-        })
-    }).catch((error)=>{
-      console.log("error",error)
-    })
-  }
-  else{
-    alert("add minimum 8 chracter's");
-  }
-    }else{
-    alert("Password doesn't match");
-    }
-    }else{
-      alert("Please Enter Valid Email");  
-    }
-    }else{
+
+
+
+  //This function will called on signup button click 
+  //By clicking the person will create a new account
+  const onPressSignUp = async () => {
+    if (
+      email &&
+      pass &&
+      pass2 &&
+      phone &&
+      age &&
+      gender &&
+      bgroup &&
+      name != ""
+    ) {
+      let validMail;
+      validMail = validateEmail();
+      if (validMail) {
+        if (pass === pass2) {
+          if (pass.length > 7) {
+            await signUp(email, pass, phone, age, gender, bgroup, name)
+              .then(() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "ProfileScreen" }],
+                });
+              })
+              .catch((error) => {
+                console.log("error", error);
+              });
+          } else {
+            alert("add minimum 8 chracter's");
+          }
+        } else {
+          alert("Password doesn't match");
+        }
+      } else {
+        alert("Please Enter Valid Email");
+      }
+    } else {
       alert("Please fill all Fields");
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-
       {/* Main container with background image and signup inputs with it */}
       <ImageBackground
         style={{ height: hp("100%"), width: wp("100%") }}
@@ -100,108 +121,95 @@ export default function SignUpScreen({ navigation }) {
           />
 
           <View>
-            <View >
-                
-           
-            </View>
+            <View></View>
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Email address"
                 style={styles.input}
-                keyboardType='email-address'
-                onChangeText={(email) => setEmail(email) }
+                keyboardType="email-address"
+                onChangeText={(email) => setEmail(email)}
                 value={email}
               />
 
               <Entypo name="mail" size={28} color="lightgray" />
             </View>
-             
+
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Name"
                 style={styles.input}
-                keyboardType='numbers-and-punctuation'
-                onChangeText={(name) => setName(name) }
+                keyboardType="numbers-and-punctuation"
+                onChangeText={(name) => setName(name)}
                 value={name}
               />
 
-              <Entypo name="mail" size={28} color="lightgray" />
+              <MaterialIcons
+                name="drive-file-rename-outline"
+                size={28}
+                color="lightgray"
+              />
             </View>
-            
-            
+
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Age"
                 style={styles.input}
-                keyboardType='number-pad'
-                onChangeText={(age) => setAge(age) }
+                keyboardType="number-pad"
+                onChangeText={(age) => setAge(age)}
                 value={age}
               />
 
-             
               <MaterialIcons name="date-range" size={28} color="lightgray" />
             </View>
 
-
             <View style={styles.commonContainer}>
-            
-             
-             <SelectPicker
-      onValueChange={(value) => {
-        // Do anything you want with the value.
-        // For example, save in state.
-        setGender(value);
-      }}
-      
-      doneButtonText="Done"
-      selected={gender}
-     
-      style={{ width: wp("80%"), }}
-      placeholder={"Gender"}
-      placeholderStyle={{ width: wp("75%"),color:'lightgray' }}
-    >
-      {Object.values(options).map((val, index) => (
-        <SelectPicker.Item label={val} value={val} key={index} />
-      ))}
-    </SelectPicker>
-             
-    <MaterialCommunityIcons name="gender-male" size={28} color="lightgray" />
+              <SelectPicker
+                onValueChange={(value) => {
+                  // Do anything you want with the value.
+                  // For example, save in state.
+                  setGender(value);
+                }}
+                doneButtonText="Done"
+                selected={gender}
+                style={{ width: wp("80%") }}
+                placeholder={"Gender"}
+                placeholderStyle={{ width: wp("75%"), color: "lightgray" }}
+              >
+                {Object.values(options).map((val, index) => (
+                  <SelectPicker.Item label={val} value={val} key={index} />
+                ))}
+              </SelectPicker>
+
+              <Foundation name="male-female" size={28} color="lightgray" />
             </View>
 
-
             <View style={styles.commonContainer}>
-               
-             <SelectPicker
-      onValueChange={(value) => {
-        // Do anything you want with the value.
-        // For example, save in state.
-        setBgroup(value);
-      }}
-      
-      doneButtonText="Done"
-      selected={bgroup}
-     
-      style={{ width: wp("80%"), }}
-      placeholder={"Blood Group"}
-      
-      placeholderStyle={{ width: wp("75%"),color:'lightgray' }}
-    >
-      {Object.values(options2).map((val, index) => (
-        <SelectPicker.Item label={val} value={val} key={index} />
-      ))}
-    </SelectPicker>
+              <SelectPicker
+                onValueChange={(value) => {
+                  // Do anything you want with the value.
+                  // For example, save in state.
+                  setBgroup(value);
+                }}
+                doneButtonText="Done"
+                selected={bgroup}
+                style={{ width: wp("80%") }}
+                placeholder={"Blood Group"}
+                placeholderStyle={{ width: wp("75%"), color: "lightgray" }}
+              >
+                {Object.values(options2).map((val, index) => (
+                  <SelectPicker.Item label={val} value={val} key={index} />
+                ))}
+              </SelectPicker>
 
-              <Entypo name="mail" size={28} color="lightgray" />
+              <Fontisto name="blood-drop" size={24} color="lightgray" />
             </View>
-
 
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Password"
                 style={styles.input}
                 secureTextEntry={true}
-                
-                onChangeText={(text)=>setPass(text)}
+                onChangeText={(text) => setPass(text)}
                 value={pass}
               />
 
@@ -213,38 +221,28 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Repeat Password"
                 style={styles.input}
                 secureTextEntry={true}
-                onChangeText={(text)=>setPass2(text)}
+                onChangeText={(text) => setPass2(text)}
                 value={pass2}
               />
 
               <MaterialIcons name="lock" size={28} color="lightgray" />
             </View>
 
-            
             <View style={styles.commonContainer}>
-            <PhoneInput
-              ref={phoneInput}
-              defaultValue={phone}
-              defaultCode="US"
-              containerStyle={styles.input}
-              textInputStyle={{height:70,}}
-              onChangeText={(number) => {
-                setPhone(number);
-              }}
-
-              
-              
-            />
+              <PhoneInput
+                ref={phoneInput}
+                defaultValue={phone}
+                defaultCode="US"
+                containerStyle={styles.input}
+                textInputStyle={{ height: 70 }}
+                onChangeText={(number) => {
+                  setPhone(number);
+                }}
+              />
               <FontAwesome name="phone" size={24} color="lightgray" />
             </View>
 
-
-              
-             
-
-            <TouchableOpacity
-              onPress={onPressSignUp}
-            >
+            <TouchableOpacity onPress={onPressSignUp}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginText}>Sign Up</Text>
               </View>
@@ -266,7 +264,7 @@ export default function SignUpScreen({ navigation }) {
       </ImageBackground>
 
       {/* Social logins Buttons Facebook and Google */}
-{/* 
+      {/* 
       <View style={styles.socialContainer}>
         <View style={styles.socialButton}>
           <View style={styles.fbContainer}>
@@ -368,13 +366,13 @@ const styles = StyleSheet.create({
     marginLeft: wp("2%"),
   },
   inputView: {
-    backgroundColor: '#F6F6F6',
+    backgroundColor: "#F6F6F6",
     width: WIDTH - 70,
-    flexDirection: 'row',
+    flexDirection: "row",
     borderRadius: 25,
     padding: 7,
     marginVertical: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
     marginHorizontal: 50,
   },
 });

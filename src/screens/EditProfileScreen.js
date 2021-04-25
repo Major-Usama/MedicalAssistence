@@ -7,9 +7,10 @@ import {
   Text,
   Dimensions,
   View,
+  Alert
 } from "react-native";
 import SelectPicker from "react-native-form-select-picker";
-import { AntDesign, Entypo, MaterialIcons, Zocial, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, Entypo, MaterialIcons,Fontisto, FontAwesome } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,6 +19,7 @@ import ImageOverlay from "react-native-image-overlay";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import PhoneInput from 'react-native-phone-number-input';
 import { updateProfileInfo } from "../Database/authMethods";
+import { Foundation } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -34,9 +36,14 @@ export default function EditProfileScreen({ navigation,route }) {
   const [bgroup, setBgroup] = useState(bloodGroupValue);
   const phoneInput = useRef(null);
 
+
+  //This function will called when we click on the update button
+  //and its implemented in the authMethods.js file
   const updateUser=async()=>{
     await updateProfileInfo(key,email, name, age, gender, bgroup, phone).then((res) => {
-        console.log("res:", res);
+      Alert.alert('Profile has been updated,reload the app to implement changes')
+           console.log("res:", res);
+          
       }).catch((error) => {
         console.log("error", error);
       });
@@ -111,7 +118,7 @@ export default function EditProfileScreen({ navigation,route }) {
                   <SelectPicker.Item label={val} value={val} key={index} />
                 ))}
               </SelectPicker>
-              <MaterialIcons name="date-range" size={28} color="lightgray" />
+              <Foundation name="male-female" size={28} color="lightgray" />
             </View>
             <View style={styles.commonContainer}>
               <SelectPicker
@@ -126,7 +133,7 @@ export default function EditProfileScreen({ navigation,route }) {
                   <SelectPicker.Item label={val} value={val} key={index} />
                 ))}
               </SelectPicker>
-              <Entypo name="mail" size={28} color="lightgray" />
+              <Fontisto name="blood-drop" size={28} color="lightgray" />
             </View>
             <View style={styles.commonContainer}>
               <PhoneInput
