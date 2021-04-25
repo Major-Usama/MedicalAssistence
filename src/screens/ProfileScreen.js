@@ -61,7 +61,15 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.profile}>Profile</Text>
         </View>
           
-        <TouchableOpacity onPress={()=>navigation.navigate('EditProfileScreen')}>
+        <TouchableOpacity onPress={()=>navigation.navigate('EditProfileScreen',{
+          key:userInfo[0].key,
+          emailValue:userInfo[0].email,
+          nameValue:userInfo[0].name,
+          ageValue:userInfo[0].age,
+          genderValue:userInfo[0].gender,
+          bloodGroupValue:userInfo[0].bgroup,
+          phoneValue:userInfo[0].phone
+        })}>
           
         <Text  style={styles.editprofileText}>Edit Profile</Text>
 

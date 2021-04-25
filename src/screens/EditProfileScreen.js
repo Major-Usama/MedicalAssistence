@@ -1,4 +1,4 @@
-import React,{useRef,useState,useEffect} from "react";
+import React, { useRef, useState } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -8,85 +8,42 @@ import {
   Dimensions,
   View,
 } from "react-native";
-
 import SelectPicker from "react-native-form-select-picker";
-import { AntDesign, Entypo, MaterialIcons ,Zocial,FontAwesome} from "@expo/vector-icons";
+import { AntDesign, Entypo, MaterialIcons, Zocial, FontAwesome } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ImageOverlay from "react-native-image-overlay";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {signUp} from "../Database/authMethods"
 import PhoneInput from 'react-native-phone-number-input';
-import { getUserInfo } from "../Database/authMethods";
-import * as firebase from "firebase";
-import "firebase/firestore";
+import { updateProfileInfo } from "../Database/authMethods";
+
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const options = ["Male","Female"];
-const options2 = ["Ab+","A-B-","A+","A-","O+","O-","B+","B-"];
-export default function EditProfileScreen({ navigation }) {
-  const [email, setEmail] = React.useState("");
-  const [pass, setPass] = React.useState("");
-  const [pass2, setPass2] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [age, setAge] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [bgroup, setBgroup] = React.useState("");
+const options = ["Male", "Female"];
+const options2 = ["Ab+", "A-B-", "A+", "A-", "O+", "O-", "B+", "B-"];
+
+export default function EditProfileScreen({ navigation,route }) {
+  const { key,emailValue,nameValue,ageValue,genderValue,bloodGroupValue,phoneValue } = route.params
+  const [email, setEmail] = useState(emailValue);
+  const [phone, setPhone] = useState(phoneValue);
+  const [age, setAge] = useState(ageValue);
+  const [gender, setGender] = useState(genderValue);
+  const [name, setName] = useState(nameValue);
+  const [bgroup, setBgroup] = useState(bloodGroupValue);
   const phoneInput = useRef(null);
 
-
-  const [userInfo, setUserInfo] = useState("");
-
-  useEffect(() => {
-    profileInfo();
-  }, []);
-
-  const profileInfo = async () => {
-    await getUserInfo()
-      .then((res) => {
+  const updateUser=async()=>{
+    await updateProfileInfo(key,email, name, age, gender, bgroup, phone).then((res) => {
         console.log("res:", res);
-        setUserInfo(res);
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log("error", error);
       });
-  };
-
-   function updateUser() {
-   
-    const updateDBRef = firebase.firestore().collection('users').doc();
-    updateDBRef.set({
-      name: name,
-      email: email,
-      
-    }).then((docRef) => {
-     setEmail(""),
-     setName("")
-  
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-     
-    });
   }
-
-
- 
-
-  
-
-
-  
-  
-  
 
   return (
     <SafeAreaView style={styles.container}>
-
-      {/* Main container with background image and signup inputs with it */}
       <ImageBackground
         style={{ height: hp("100%"), width: wp("100%") }}
         source={require("../images/Ambulance.jpeg")}
@@ -108,192 +65,88 @@ export default function EditProfileScreen({ navigation }) {
             size={26}
             color="#ffffff"
           />
-
           <View>
             <View >
-                
-           
             </View>
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Email address"
                 style={styles.input}
                 keyboardType='email-address'
-                onChangeText={(email) => setEmail(email) }
+                onChangeText={(email) => setEmail(email)}
                 value={email}
               />
-
               <Entypo name="mail" size={28} color="lightgray" />
             </View>
-             
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Name"
                 style={styles.input}
                 keyboardType='numbers-and-punctuation'
-                onChangeText={(name) => setName(name) }
+                onChangeText={(name) => setName(name)}
                 value={name}
               />
-
               <Entypo name="mail" size={28} color="lightgray" />
             </View>
-            
-            
             <View style={styles.commonContainer}>
               <TextInput
                 placeholder="Age"
                 style={styles.input}
                 keyboardType='number-pad'
-                onChangeText={(age) => setAge(age) }
+                onChangeText={(age) => setAge(age)}
                 value={age}
               />
-
-             
               <MaterialIcons name="date-range" size={28} color="lightgray" />
             </View>
-
-
             <View style={styles.commonContainer}>
-            
-             
-             <SelectPicker
-      onValueChange={(value) => {
-        // Do anything you want with the value.
-        // For example, save in state.
-        setGender(value);
-      }}
-      
-      doneButtonText="Done"
-      selected={gender}
-     
-      style={{ width: wp("80%"), }}
-      placeholder={"Gender"}
-      placeholderStyle={{ width: wp("75%"),color:'lightgray' }}
-    >
-      {Object.values(options).map((val, index) => (
-        <SelectPicker.Item label={val} value={val} key={index} />
-      ))}
-    </SelectPicker>
-             
+              <SelectPicker
+                onValueChange={(value) => setGender(value)}
+                doneButtonText="Done"
+                selected={gender}
+                style={{ width: wp("80%"), }}
+                placeholder={"Gender"}
+                placeholderStyle={{ width: wp("75%"), color: 'lightgray' }}
+              >
+                {Object.values(options).map((val, index) => (
+                  <SelectPicker.Item label={val} value={val} key={index} />
+                ))}
+              </SelectPicker>
               <MaterialIcons name="date-range" size={28} color="lightgray" />
             </View>
-
-
             <View style={styles.commonContainer}>
-               
-             <SelectPicker
-      onValueChange={(value) => {
-        // Do anything you want with the value.
-        // For example, save in state.
-        setBgroup(value);
-      }}
-      
-      doneButtonText="Done"
-      selected={bgroup}
-     
-      style={{ width: wp("80%"), }}
-      placeholder={"Blood Group"}
-      
-      placeholderStyle={{ width: wp("75%"),color:'lightgray' }}
-    >
-      {Object.values(options2).map((val, index) => (
-        <SelectPicker.Item label={val} value={val} key={index} />
-      ))}
-    </SelectPicker>
-
+              <SelectPicker
+                onValueChange={(value) => setBgroup(value)}
+                doneButtonText="Done"
+                selected={bgroup}
+                style={{ width: wp("80%"), }}
+                placeholder={"Blood Group"}
+                placeholderStyle={{ width: wp("75%"), color: 'lightgray' }}
+              >
+                {Object.values(options2).map((val, index) => (
+                  <SelectPicker.Item label={val} value={val} key={index} />
+                ))}
+              </SelectPicker>
               <Entypo name="mail" size={28} color="lightgray" />
             </View>
-
-
             <View style={styles.commonContainer}>
-              <TextInput
-                placeholder="Password"
-                style={styles.input}
-                secureTextEntry={true}
-                
-                onChangeText={(text)=>setPass(text)}
-                value={pass}
+              <PhoneInput
+                ref={phoneInput}
+                defaultValue={phone}
+                defaultCode="US"
+                containerStyle={styles.input}
+                textInputStyle={{ height: 70, }}
+                onChangeText={(number) => {
+                  setPhone(number);
+                }}
               />
-
-              <MaterialIcons name="lock" size={28} color="lightgray" />
-            </View>
-
-            <View style={styles.commonContainer}>
-              <TextInput
-                placeholder="Repeat Password"
-                style={styles.input}
-                secureTextEntry={true}
-                onChangeText={(text)=>setPass2(text)}
-                value={pass2}
-              />
-
-              <MaterialIcons name="lock" size={28} color="lightgray" />
-            </View>
-
-            
-            <View style={styles.commonContainer}>
-            <PhoneInput
-              ref={phoneInput}
-              defaultValue={phone}
-              defaultCode="US"
-              containerStyle={styles.input}
-              textInputStyle={{height:70,}}
-              onChangeText={(number) => {
-                setPhone(number);
-              }}
-
-              
-              
-            />
               <FontAwesome name="phone" size={24} color="lightgray" />
             </View>
-
-
-              
-             
-
-            <TouchableOpacity
-            
-            >
-              <View style={styles.loginButton}>
-                <Text style={styles.loginText}>Update</Text>
-              </View>
+            <TouchableOpacity style={styles.loginButton} onPress={updateUser}>
+              <Text style={styles.loginText}>Update</Text>
             </TouchableOpacity>
-
-            <View style={{ alignSelf: "center", marginTop: hp("4%") }}>
-              <Text style={{ color: "#fff" }}>
-                Already have an account?{" "}
-                <Text
-                  onPress={() => navigation.navigate("LoginScreen")}
-                  style={{ color: "#26C975", textDecorationLine: "underline" }}
-                >
-                  Log in
-                </Text>
-              </Text>
-            </View>
           </View>
         </ImageOverlay>
       </ImageBackground>
-
-      {/* Social logins Buttons Facebook and Google */}
-{/* 
-      <View style={styles.socialContainer}>
-        <View style={styles.socialButton}>
-          <View style={styles.fbContainer}>
-            <Zocial name="facebook" size={24} color="#ffffff" />
-            <Text style={styles.logintext}>Log in</Text>
-          </View>
-        </View>
-
-
-        
-        <View style={{ ...styles.socialButton, backgroundColor: "#E54F34" }}>
-          <View style={styles.fbContainer}>
-            <Entypo name="google-" size={24} color="#ffffff" />
-            <Text style={styles.logintext}>Log in</Text>
-          </View>
-        </View>
-      </View> */}
     </SafeAreaView>
   );
 }

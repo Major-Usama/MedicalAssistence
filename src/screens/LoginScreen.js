@@ -41,7 +41,7 @@ export default function LoginScreen({ navigation }) {
           routes:[{name:'ProfileScreen'}]
         })
     }).catch((error)=>{
-      console.log("error",error)
+      alert(error)
     })
     }else{
     alert("Please Enter Valid Email");  

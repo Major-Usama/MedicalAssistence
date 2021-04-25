@@ -40,13 +40,6 @@ export default function HomeScreen({navigation}) {
         style={{ width: wp("100%"), height: hp("65%") }}
         source={require("../images/Ambulance.jpeg")}
       >
-        {/* Header */}
-
-        {/* <View style={styles.statusBar}>
-          <MaterialIcons name="network-cell" size={14} color="#ffffff" />
-          <MaterialCommunityIcons name="battery-50" size={14} color="#ffffff" />
-          <Text style={styles.time}>4:20</Text>
-        </View> */}
         <View style={styles.header}>
           <View style={styles.leftSideContainer}>
            
