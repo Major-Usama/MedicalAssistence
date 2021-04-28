@@ -50,7 +50,7 @@ export async function getUserInfo() {
   let snapshot = await firebase.firestore()
     .collection('users')
     .where('uid', '==', currentUser.uid)
-    .onSnapshot().catch(() => {
+    .get().catch(() => {
       throw ('user token is expired')
     });
 
