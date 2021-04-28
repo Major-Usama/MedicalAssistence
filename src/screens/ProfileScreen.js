@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,15 +20,17 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import { useFocusEffect } from '@react-navigation/native';
 import { getUserInfo } from "../Database/authMethods";
 
 export default function ProfileScreen({ navigation }) {
   const [userInfo, setUserInfo] = useState("");
 
-  useEffect(() => {
-    profileInfo();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      profileInfo();
+  }, [])
+  );
 
   const profileInfo = async () => {
     await getUserInfo()
