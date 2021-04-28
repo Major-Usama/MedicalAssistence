@@ -36,9 +36,6 @@ export default function EditProfileScreen({ navigation,route }) {
   const [bgroup, setBgroup] = useState(bloodGroupValue);
   const phoneInput = useRef(null);
 
-
-  //This function will called when we click on the update button
-  //and its implemented in the authMethods.js file
   const updateUser=async()=>{
     await updateProfileInfo(key,email, name, age, gender, bgroup, phone).then((res) => {
       Alert.alert('Profile has been updated,reload the app to implement changes')
