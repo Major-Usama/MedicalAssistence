@@ -23,26 +23,19 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 
+import { loggingOut } from "../Database/authMethods";
 
-import {loggingOut} from '../Database/authMethods'
-
-
-
-
-export default function PatientDonorScreen({ navigation }) {
-
-  const onPressLogout=async()=>{
- 
- await loggingOut();
+export default function PatientDonorScreen({ navigation, route }) {
+  const { nameValue } = route.params;
+  const onPressLogout = async () => {
+    await loggingOut();
     navigation.reset({
-      index:0,
-      routes:[{name:'HomeScreen'}]
-    })   
+      index: 0,
+      routes: [{ name: "HomeScreen" }],
+    });
+  };
 
-    
-
-
-}
+  //Getting data from the previous screen
 
   //Tooglr button states(hooks ) to toggle between screens
   const [isEnabled, setIsEnabled] = React.useState(false);
@@ -70,11 +63,10 @@ export default function PatientDonorScreen({ navigation }) {
             contentPosition="center"
           >
             <View>
-              <Image
-                style={styles.profileImage}
-                source={require("../images/prof.jpg")}
-              />
-              <Text style={styles.name}>Awais Murtaza</Text>
+              <View style={styles.profileImage}>
+                <Ionicons name="person" size={50} color="#AFB5B8" />
+              </View>
+              <Text style={styles.name}>{nameValue}</Text>
             </View>
           </ImageOverlay>
 
@@ -150,12 +142,11 @@ export default function PatientDonorScreen({ navigation }) {
             </View>
           </View>
 
-            
           <View style={styles.bottomContainer}>
-          <TouchableWithoutFeedback onPress={onPressLogout}>
-            <View style={styles.logOut}>
-              <Text style={styles.logoutText}> Log Out</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={onPressLogout}>
+              <View style={styles.logOut}>
+                <Text style={styles.logoutText}>LogOut</Text>
+              </View>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -179,11 +170,10 @@ export default function PatientDonorScreen({ navigation }) {
             contentPosition="center"
           >
             <View>
-              <Image
-                style={styles.profileImage}
-                source={require("../images/prof.jpg")}
-              />
-              <Text style={styles.name}>Awais Murtaza</Text>
+              <View style={styles.profileImage}>
+                <Ionicons name="person" size={50} color="#AFB5B8" />
+              </View>
+              <Text style={styles.name}>{nameValue}</Text>
             </View>
           </ImageOverlay>
           <TouchableWithoutFeedback
@@ -258,10 +248,10 @@ export default function PatientDonorScreen({ navigation }) {
 
           {/* Logout Button */}
           <View style={styles.bottomContainer}>
-          <TouchableWithoutFeedback onPress={onPressLogout}>
-            <View style={styles.logOut}>
-              <Text style={styles.logoutText}> Log Out</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={onPressLogout}>
+              <View style={styles.logOut}>
+                <Text style={styles.logoutText}>LogOut</Text>
+              </View>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -279,9 +269,12 @@ const styles = StyleSheet.create({
   },
 
   profileImage: {
-    width: 130,
-    height: 130,
-    borderRadius: 65,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "#f7f7f7",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   name: {

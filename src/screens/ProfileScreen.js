@@ -77,7 +77,9 @@ export default function ProfileScreen({ navigation }) {
 
 
         <Entypo
-          onPress={() => navigation.navigate("PatientDonorScreen")}
+          onPress={() => navigation.navigate("PatientDonorScreen",
+          { nameValue:userInfo[0].name,}
+          )}
           name="dots-three-vertical"
           size={20}
           color="white"
@@ -85,7 +87,9 @@ export default function ProfileScreen({ navigation }) {
       </View>
 
       <View>
-        <Image style={styles.image} source={require("../images/prof.jpg")} />
+        <View style={styles.image}  >
+        <Ionicons name="person" size={200} color="#AFB5B8" />
+          </View>
         <View
           style={{
             width: wp("100%"),
@@ -118,7 +122,7 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={{ ...styles.ageContainer, marginTop: hp("2") }}>
-          <Text style={styles.gender}>Gender</Text>
+          <Text style={styles.gender}>Gendar</Text>
           <Text style={styles.gender}>
             {userInfo != "" && userInfo[0].gender}
           </Text>
@@ -178,7 +182,7 @@ export default function ProfileScreen({ navigation }) {
               elevation: 10,
             }}
           >
-            <MaterialIcons name="mode-edit" size={28} color="#989898" />
+            
           </View>
         </View>
 
@@ -198,7 +202,7 @@ export default function ProfileScreen({ navigation }) {
           </View>
 
           <View style={styles.edit}>
-            <MaterialIcons name="mode-edit" size={28} color="#989898" />
+           
           </View>
         </View>
       </View>
@@ -247,7 +251,10 @@ const styles = StyleSheet.create({
   image: {
     width: wp("100%"),
     height: hp("40"),
+    justifyContent:'center',
+    alignItems:'center'
   },
+
 
   avatar: {
     width: 45,
@@ -311,7 +318,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp("5%"),
   },
   edit: {
-    backgroundColor: "#585858",
+    backgroundColor: "#4F4F4F",
 
     width: wp("20"),
     height: hp("11"),
